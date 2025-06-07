@@ -17,6 +17,7 @@ import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
+import AddIcon from '@mui/icons-material/Add';
 
 const sectionTitles: Record<string, string> = {
   todo: 'To Do',
@@ -183,12 +184,21 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold text-black tracking-tight">Mobile App</h1>
           <span className="flex gap-2">
-            <span className="bg-primary rounded-lg p-1 cursor-pointer"><LinkIcon fontSize="small" className="text-white" /></span>
-            <span className="bg-primary rounded-lg p-1 cursor-pointer"><EditOutlinedIcon fontSize="small" className="text-white" /></span>
+            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center cursor-pointer shadow-sm text-xs">
+              <LinkIcon fontSize="inherit" className="text-[#5030E5]" />
+            </span>
+            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center cursor-pointer shadow-sm text-xs">
+              <EditOutlinedIcon fontSize="inherit" className="text-[#5030E5]" />
+            </span>
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <button className="bg-transparent text-primary text-xs font-semibold rounded-lg px-4 py-2">Invite</button>
+          <button className="flex items-center gap-2 bg-transparent text-primary text-xs font-semibold rounded-lg px-4 py-2">
+            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center shadow-sm text-xs">
+              <AddIcon fontSize="inherit" className="text-[#5030E5]" />
+            </span>
+            Invite
+          </button>
           <div className="flex -space-x-2">
             <Avatar src="https://randomuser.me/api/portraits/men/32.jpg" className="border-2 border-white" sx={{ width: 32, height: 32 }} />
             <Avatar src="https://randomuser.me/api/portraits/women/44.jpg" className="border-2 border-white" sx={{ width: 32, height: 32 }} />
