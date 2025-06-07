@@ -21,6 +21,10 @@ import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 const sectionTitles: Record<string, string> = {
   todo: 'To Do',
@@ -150,7 +154,7 @@ const ListIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const GridIcon = ({ className = " rounded-full" }: { className?: string }) => (
+export const GridIcon = ({ className = " rounded-full" }: { className?: string }) => (
   <svg className={className} width="21" height="21" fill="none" viewBox="0 0 21 21">
     <rect x="3" y="3" width="5" height="5" rx="1" fill="currentColor"/>
     <rect x="13" y="3" width="5" height="5" rx="1" fill="currentColor"/>
