@@ -14,10 +14,13 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined';
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
+import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 
 const sectionTitles: Record<string, string> = {
   todo: 'To Do',
@@ -225,11 +228,19 @@ export const Dashboard: React.FC = () => {
       {/* Filter/Share Row */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex gap-3">
-          <button className="bg-white border border-[#E4E4E4] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2">Filter <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-          <button className="bg-white border border-[#E4E4E4] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2">Today <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+        <button className="bg-white border border-[#787486] rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2">
+              <FilterAltOutlinedIcon fontSize="small" className="text-[#787486]" />
+              Filter
+              <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+            <button className="bg-white border border-[#787486] rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2">
+              <DateRangeOutlinedIcon fontSize="small" className="text-[#787486]" />
+              Today
+              <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>  
         </div>
         <div className="flex items-center gap-3">
-          <button className="bg-white border border-[#E4E4E4] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
+          <button className="bg-white border border-[#787486] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
           <span className="w-px h-6 bg-black mx-2" />
           <button className="bg-primary rounded-lg p-2 w-8 h-8 flex items-center justify-center">
           <ListIcon className="text-white"   />
