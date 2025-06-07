@@ -36,7 +36,7 @@ export const Sidebar: React.FC = () => (
       <div className="mb-8">
         <div className="flex items-center justify-between text-[10px] text-gray-400 mb-2 font-semibold tracking-widest uppercase">
           <span>MY PROJECTS</span>
-          <AddIcon fontSize="small" className="text-[#787486] cursor-pointer" style={{ fontSize: 16, marginBottom: 1 }} />
+          <AddIcon fontSize="small" className="text-[#787486] cursor-pointer border-2 border-[#787486] rounded-md" style={{ fontSize: 16, marginBottom: 1 }} />
         </div>
         <ul className="flex flex-col gap-1">
           {projects.map((project) => (

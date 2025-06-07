@@ -11,7 +11,7 @@ import './index.css';
 function App() {
   const activities = useSelector((state: RootState) => state.activityLog.activities);
   return (
-    <div className="flex h-screen w-screen bg-[#f9fafb]">
+    <div className="flex h-screen w-screen bg-white">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0 ml-64">
         <Header />
@@ -20,7 +20,7 @@ function App() {
           <ActivityLog activities={activities} />
         </main>
       </div>
-    </div>
+      </div>
   );
 }
 

@@ -18,7 +18,6 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
-import { CARD_STATUS, CARD_TYPES } from '../constants';
 
 const sectionTitles: Record<string, string> = {
   todo: 'To Do',
@@ -141,6 +140,22 @@ const sectionData = [
   },
 ];
 
+const ListIcon = ({ className = "" }: { className?: string }) => (
+  <svg className={className} width="20" height="20" fill="none" viewBox="0 0 20 20">
+    <rect x="3" y="5" width="14" height="3" rx="1" fill="currentColor"/>
+    <rect x="3" y="12" width="14" height="3" rx="1" fill="currentColor"/>
+  </svg>
+);
+
+const GridIcon = ({ className = " rounded-full" }: { className?: string }) => (
+  <svg className={className} width="21" height="21" fill="none" viewBox="0 0 21 21">
+    <rect x="3" y="3" width="5" height="5" rx="1" fill="currentColor"/>
+    <rect x="13" y="3" width="5" height="5" rx="1" fill="currentColor"/>
+    <rect x="3" y="13" width="5" height="5" rx="1" fill="currentColor"/>
+    <rect x="13" y="13" width="5" height="5" rx="1" fill="currentColor"/>
+  </svg>
+);
+
 export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const tasksBySection = useSelector((state: RootState) => state.tasks.tasksBySection);
@@ -179,25 +194,23 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#f9fafb]">
+    <div className="min-h-screen w-full bg-white">
       {/* Title Row */}
       <div className="flex items-center justify-between mt-2 mb-4">
-        <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold text-black tracking-tight">Mobile App</h1>
-          <span className="flex gap-2">
-            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center cursor-pointer shadow-sm text-xs">
-              <LinkIcon fontSize="inherit" className="text-[#5030E5]" />
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold text-black tracking-tight">Mobile App</h1>
+          <span className="flex gap-3 mt-3 ml-3">
+            <span className="bg-[#EEF2FF] rounded-lg w-6 h-6 flex items-center justify-center">
+              <LinkIcon className="text-[#635DFF] w-4 h-4" fontSize="inherit" />
             </span>
-            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center cursor-pointer shadow-sm text-xs">
-              <EditOutlinedIcon fontSize="inherit" className="text-[#5030E5]" />
+            <span className="bg-[#EEF2FF] rounded-lg w-6 h-6 flex items-center justify-center">
+              <EditOutlinedIcon className="text-[#635DFF] w-4 h-4" fontSize="inherit" />
             </span>
           </span>
         </div>
-        <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 bg-transparent text-primary text-xs font-semibold rounded-lg px-4 py-2">
-            <span className="bg-[#E9EFFF] rounded-lg w-6 h-6 flex items-center justify-center shadow-sm text-xs">
-              <AddIcon fontSize="inherit" className="text-[#5030E5]" />
-            </span>
+        <div className="flex items-center gap-3">
+          <button className="flex items-center gap-1 text-xs font-semibold text-[#635DFF] px-2 py-1 rounded-lg bg-transparent">
+            <AddIcon className="text-[#635DFF] w-4 h-4 bg-[#EEF2FF] rounded-lg" fontSize="inherit" />
             Invite
           </button>
           <div className="flex -space-x-2">
@@ -205,7 +218,7 @@ export const Dashboard: React.FC = () => {
             <Avatar src="https://randomuser.me/api/portraits/women/44.jpg" className="border-2 border-white" sx={{ width: 32, height: 32 }} />
             <Avatar src="https://randomuser.me/api/portraits/men/45.jpg" className="border-2 border-white" sx={{ width: 32, height: 32 }} />
             <Avatar src="https://randomuser.me/api/portraits/women/46.jpg" className="border-2 border-white" sx={{ width: 32, height: 32 }} />
-            <Avatar className="bg-[#F5F6FA] text-primary text-xs font-bold border-2 border-white" sx={{ width: 32, height: 32 }}>+2</Avatar>
+            <Avatar className="bg-[#F4D7DA] text-[#D25B68] text-xs font-bold border-2 border-white" sx={{ width: 32, height: 32 }}>+2</Avatar>
           </div>
         </div>
       </div>
@@ -217,9 +230,14 @@ export const Dashboard: React.FC = () => {
         </div>
         <div className="flex items-center gap-3">
           <button className="bg-white border border-[#E4E4E4] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
-          <span className="w-px h-6 bg-[#E4E4E4] mx-2" />
-          <button className="bg-primary rounded-lg p-2"><ViewModuleOutlinedIcon fontSize="small" className="text-white" /></button>
-          <button className="bg-white border border-[#E4E4E4] rounded-lg p-2"><ViewListOutlinedIcon fontSize="small" className="text-[#787486]" /></button>
+          <span className="w-px h-6 bg-black mx-2" />
+          <button className="bg-primary rounded-lg p-2 w-8 h-8 flex items-center justify-center">
+          <ListIcon className="text-white"   />
+          </button>
+          <button className="bg-white rounded-lg p-2 w-8 h-8 flex items-center justify-center">
+        
+            <GridIcon className="text-[#787486]"/>
+          </button>
         </div>
       </div>
       {/* Kanban Board */}
