@@ -6,6 +6,7 @@ import { ActivityLog } from './components/ActivityLog';
 import { useSelector } from 'react-redux';
 import type { RootState } from './app/store';
 import './App.css'
+import './index.css';
 
 function App() {
   const activities = useSelector((state: RootState) => state.activityLog.activities);
@@ -19,7 +20,7 @@ function App() {
           <ActivityLog activities={activities} />
         </main>
       </div>
-    </div>
+      </div>
   );
 }
 
