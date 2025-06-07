@@ -1,11 +1,24 @@
 import React from 'react';
 import { Dashboard } from './pages/Dashboard';
+import { Sidebar } from './components/Sidebar';
+import { Header } from './components/Header';
+import { ActivityLog } from './components/ActivityLog';
+import { useSelector } from 'react-redux';
+import type { RootState } from './app/store';
 import './App.css'
 
 function App() {
+  const activities = useSelector((state: RootState) => state.activityLog.activities);
   return (
-    <div className="App">
-      <Dashboard />
+    <div className="flex h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header />
+        <main className="flex-1 overflow-y-auto px-8 py-6">
+          <Dashboard />
+          <ActivityLog activities={activities} />
+        </main>
+      </div>
     </div>
   );
 }

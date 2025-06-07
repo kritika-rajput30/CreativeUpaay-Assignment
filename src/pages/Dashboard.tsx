@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../app/store';
 import { addTask, moveTask } from '../features/tasks/tasksSlice';
+import { addActivity } from '../features/activityLog/activityLogSlice';
 import type { Task, TaskPriority } from '../features/tasks/types';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { SectionColumn } from '../components/SectionColumn';
@@ -9,7 +10,7 @@ import { TaskForm } from '../components/TaskForm';
 import { FilterBar } from '../components/FilterBar';
 import { v4 as uuidv4 } from 'uuid';
 
-const sectionTitles = {
+const sectionTitles: Record<string, string> = {
   todo: 'To Do',
   inprogress: 'On Progress',
   done: 'Done',
@@ -27,10 +28,12 @@ export const Dashboard: React.FC = () => {
 
   const handleTaskSubmit = (task: { title: string; description: string; priority: TaskPriority }) => {
     if (openSection) {
+      const newTask = { ...task, id: uuidv4() };
       dispatch(addTask({
         section: openSection,
-        task: { ...task, id: uuidv4() },
+        task: newTask,
       }));
+      dispatch(addActivity(`Added task "${task.title}" to ${sectionTitles[openSection]}`));
       setOpenSection(null);
     }
   };
@@ -47,6 +50,7 @@ export const Dashboard: React.FC = () => {
         destIndex: destination.index,
       })
     );
+    dispatch(addActivity(`Moved task from ${sectionTitles[source.droppableId]} to ${sectionTitles[destination.droppableId]}`));
   };
 
   return (
