@@ -11,16 +11,16 @@ import './index.css';
 function App() {
   const activities = useSelector((state: RootState) => state.activityLog.activities);
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen w-screen bg-[#f9fafb]">
       <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 ml-64">
         <Header />
-        <main className="flex-1 overflow-y-auto px-8 py-6">
+        <main className="flex-1 overflow-x-auto px-8 py-6">
           <Dashboard />
           <ActivityLog activities={activities} />
         </main>
       </div>
-      </div>
+    </div>
   );
 }
 
