@@ -18,6 +18,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
+import { CARD_STATUS, CARD_TYPES } from '../constants';
 
 const sectionTitles: Record<string, string> = {
   todo: 'To Do',
