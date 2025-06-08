@@ -32,7 +32,7 @@ A simple **Task Management** application built using **React**, **Redux Toolkit*
 
 ```bash
 # Clone the repository
-git clone [https://github.com/kritika-rajput30/CreativeUpaay-Assignment](https://github.com/kritika-rajput30/CreativeUpaay-Assignment)
+git clone https://github.com/kritika-rajput30/CreativeUpaay-Assignment
 
 # Navigate to the project folder
 cd CreativeUpaay-Assignment
