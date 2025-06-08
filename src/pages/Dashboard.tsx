@@ -17,14 +17,14 @@ import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS, PRIORITY_STYLES } from '../constants';
-import { GridIcon, LinkIcon, ListIcon, PenIcon } from '../utils/icons';
+import { Add2Icon, GridIcon, LinkIcon, ListIcon, MemberIcon, PenIcon, ShareIcon } from '../utils/icons';
 
 
 
 export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const tasksBySection = useSelector((state: RootState) => state.tasks.tasksBySection);
-  const [openSection, setOpenSection] = useState<string | null>(null);
+  const [openSection, setOpenSection] = useState<keyof typeof STATUS | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({
     priority: '',
     dueDate: null,
@@ -93,12 +93,11 @@ export const Dashboard: React.FC = () => {
   }, [tasksBySection, filters]);
 
   const handleAddTask = (section: string) => {
-    setOpenSection(section);
+    setOpenSection(section as keyof typeof STATUS);
   };
 
   const handleTaskSubmit = (task: { title: string; description: string; priority: TaskPriority }) => {
     if (openSection) {
-      const sectionId = openSection as keyof typeof STATUS;
       const newTask: Task = {
         ...task,
         id: uuidv4(),
@@ -108,10 +107,10 @@ export const Dashboard: React.FC = () => {
         labels: []
       };
       dispatch(addTask({
-        section: sectionId,
+        section: openSection,
         task: newTask,
       }));
-      dispatch(addActivity(`Added task "${task.title}" to ${SECTION_TITLES[sectionId]}`));
+      dispatch(addActivity(`Added task "${task.title}" to ${SECTION_TITLES[openSection]}`));
       setOpenSection(null);
     }
   };
@@ -152,7 +151,7 @@ export const Dashboard: React.FC = () => {
         </div>
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-1 text-xs font-semibold text-[#635DFF] px-2 py-1 rounded-lg bg-transparent">
-            <AddIcon className="text-[#635DFF] w-4 h-4 bg-[#EEF2FF] rounded-lg" fontSize="inherit" />
+           <p className=' bg-violet-200 rounded-sm'><Add2Icon color='blue' size={16} /></p> 
             Invite
           </button>
           <div className="flex -space-x-2">
@@ -172,10 +171,10 @@ export const Dashboard: React.FC = () => {
         availableTags={availableTags}
       />
         <div className="flex items-center gap-3">
-          <button className="bg-white border border-[#787486] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
+          <button className="bg-white border border-[#787486] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareIcon size={12}/> Share</button>
           <span className="w-px h-6 bg-black mx-2" />
           <button className="bg-primary rounded-lg p-2 w-8 h-8 flex items-center justify-center">
-          <ListIcon />
+          <ListIcon className=' text-white' />
           </button>
           <button className="bg-white rounded-lg p-2 w-8 h-8 flex items-center justify-center">
         

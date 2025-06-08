@@ -224,4 +224,64 @@ export const Icon = ({ size = 24, color = "#000000" }) => {
 </defs>
 </svg>);
 };
-export {LayoutIcon, CalendarIcon, FilterIcon, MessageIcon, TaskIcon, MemberIcon,SettingIcon, FolderIcon, ListIcon, GridIcon, TriangleCirclesLogo, MessageQuestionIcon, NotificationIcon, LinkIcon, PenIcon, AddIcon };
+ const ShareIcon = ({ size = 24, color = "#000000" }) => {
+    return (<svg width={size} height={size} viewBox={`0 0 24 24`} fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3111_32738)">
+<path d="M18.0001 7.16C17.9401 7.15 17.8701 7.15 17.8101 7.16C16.4301 7.11 15.3301 5.98 15.3301 4.58C15.3301 3.15 16.4801 2 17.9101 2C19.3401 2 20.4901 3.16 20.4901 4.58C20.4801 5.98 19.3801 7.11 18.0001 7.16Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M16.9699 14.4402C18.3399 14.6702 19.8499 14.4302 20.9099 13.7202C22.3199 12.7802 22.3199 11.2402 20.9099 10.3002C19.8399 9.59016 18.3099 9.35016 16.9399 9.59016" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M5.96998 7.16C6.02998 7.15 6.09998 7.15 6.15998 7.16C7.53998 7.11 8.63998 5.98 8.63998 4.58C8.63998 3.15 7.48998 2 6.05998 2C4.62998 2 3.47998 3.16 3.47998 4.58C3.48998 5.98 4.58998 7.11 5.96998 7.16Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M6.99994 14.4402C5.62994 14.6702 4.11994 14.4302 3.05994 13.7202C1.64994 12.7802 1.64994 11.2402 3.05994 10.3002C4.12994 9.59016 5.65994 9.35016 7.02994 9.59016" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M12.0001 14.6297C11.9401 14.6197 11.8701 14.6197 11.8101 14.6297C10.4301 14.5797 9.33008 13.4497 9.33008 12.0497C9.33008 10.6197 10.4801 9.46973 11.9101 9.46973C13.3401 9.46973 14.4901 10.6297 14.4901 12.0497C14.4801 13.4497 13.3801 14.5897 12.0001 14.6297Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M9.09021 17.7794C7.68021 18.7194 7.68021 20.2594 9.09021 21.1994C10.6902 22.2694 13.3102 22.2694 14.9102 21.1994C16.3202 20.2594 16.3202 18.7194 14.9102 17.7794C13.3202 16.7194 10.6902 16.7194 9.09021 17.7794Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_3111_32738">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>);
+};
+ const Add2Icon = ({ size = 24, color = "#000000" }) => {
+    return (<svg width={size} height={size} viewBox={`0 0 24 24`} fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_4418_9825)">
+<path d="M6 12H18" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M12 18V6" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+<defs>
+<clipPath id="clip0_4418_9825">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>);
+};
+
+const LabelIcon = ({ size = 24, color = "#000000" }) => {
+  return (<svg width={size} height={size} viewBox={`0 0 24 24`} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clipPath="url(#clip0_4418_9126)">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12 8V16" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 12H16" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_4418_9126">
+        <rect width="24" height="24" fill="white"/>
+      </clipPath>
+    </defs>
+  </svg>);
+};
+
+const TagIcon = ({ size = 24, color = "#000000" }) => {
+  return (<svg width={size} height={size} viewBox={`0 0 24 24`} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clipPath="url(#clip0_4418_9127)">
+      <path d="M4.40491 15.5264L8.93491 20.0564C10.7949 21.9164 13.8149 21.9164 15.6849 20.0564L20.0749 15.6664C21.9349 13.8064 21.9349 10.7864 20.0749 8.91637L15.5349 4.39637C14.5849 3.44637 13.2749 2.93637 11.9349 2.93637L6.40491 2.93637C4.54491 2.93637 2.93491 4.54637 2.93491 6.40637L2.93491 11.9364C2.93491 13.2764 3.44491 14.5864 4.40491 15.5264Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9.73486 9.93457C10.6864 9.93457 11.4599 9.16107 11.4599 8.20957C11.4599 7.25807 10.6864 6.48457 9.73486 6.48457C8.78336 6.48457 8.00986 7.25807 8.00986 8.20957C8.00986 9.16107 8.78336 9.93457 9.73486 9.93457Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_4418_9127">
+        <rect width="24" height="24" fill="white"/>
+      </clipPath>
+    </defs>
+  </svg>);
+};
+
+export {LayoutIcon, CalendarIcon, FilterIcon, MessageIcon, TaskIcon, MemberIcon,SettingIcon, FolderIcon, ListIcon, GridIcon, TriangleCirclesLogo, MessageQuestionIcon, NotificationIcon, LinkIcon, PenIcon, AddIcon, ShareIcon, Add2Icon, LabelIcon, TagIcon };

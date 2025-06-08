@@ -1,3 +1,5 @@
+import { STATUS } from '../../constants';
+
 export type TaskPriority = 'Low' | 'High' | 'Completed';
 
 export interface Subtask {
@@ -19,6 +21,6 @@ export interface Task {
 
 export interface TaskState {
   tasksBySection: {
-    [section: string]: Task[];
+    [K in keyof typeof STATUS]: Task[];
   };
 } 
