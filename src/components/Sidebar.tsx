@@ -1,12 +1,8 @@
 import React from 'react';
 import { SIDEBAR_PROJECTS } from '../constants';
 import { LayoutIcon, MemberIcon, MessageIcon, SettingIcon, TaskIcon, TriangleCirclesLogo } from '../utils/icons';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
-import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import { AddIcon } from '../utils/icons';
 
 

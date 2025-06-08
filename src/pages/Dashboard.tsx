@@ -11,11 +11,9 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import type { DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
-import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS } from '../constants';
-import { LinkIcon, PenIcon, Add2Icon, GridIcon, ListIcon, MemberIcon, ShareIcon } from '../utils/icons';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import { SECTION_TITLES, SECTION_COLORS, SECTION_DATA, STATUS } from '../constants';
+import { LinkIcon, PenIcon, Add2Icon, GridIcon, ListIcon, ShareIcon } from '../utils/icons';
+
 
 export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
