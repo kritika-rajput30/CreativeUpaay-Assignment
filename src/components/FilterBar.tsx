@@ -7,10 +7,8 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { CalendarIcon, FilterIcon } from '../utils/icons';
@@ -171,8 +169,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <StaticDatePicker
-            orientation="portrait"
+          <DatePicker
             value={filters.dueDate}
             onChange={handleDateChange}
           />

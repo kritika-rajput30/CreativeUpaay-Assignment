@@ -9,17 +9,13 @@ import { FilterBar, type FilterOptions } from '../components/FilterBar';
 import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import type { DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
+import Avatar from '@mui/material/Avatar';
+import { TaskCard } from '../components/TaskCard';
+import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS } from '../constants';
+import { LinkIcon, PenIcon, Add2Icon, GridIcon, ListIcon, MemberIcon, ShareIcon } from '../utils/icons';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import Avatar from '@mui/material/Avatar';
-import { TaskCard } from '../components/TaskCard';
-import AddIcon from '@mui/icons-material/Add';
-import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
-import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS, PRIORITY_STYLES } from '../constants';
-import { Add2Icon, GridIcon, LinkIcon, ListIcon, MemberIcon, PenIcon, ShareIcon } from '../utils/icons';
-
-
 
 export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();

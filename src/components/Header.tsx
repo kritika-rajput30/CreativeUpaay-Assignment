@@ -1,10 +1,10 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import Avatar from '@mui/material/Avatar';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import Avatar from '@mui/material/Avatar';
 import { CalendarIcon, MessageQuestionIcon, NotificationIcon } from '../utils/icons';
 
 export const Header: React.FC = () => (
