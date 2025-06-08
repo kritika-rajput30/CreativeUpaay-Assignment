@@ -42,7 +42,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ title, description, priority
   return (
     <div className={`bg-white rounded-xl shadow-card p-5 mb-4 cursor-pointer relative ${!isDragging ? 'hover:shadow-lg' : ''}`}>
       <div className="flex items-center justify-between mb-2">
-        <span className={`px-3 py-1 rounded-full text-xs ${PRIORITY_STYLES[priority]}`}>{priority}</span>
+        <span className={`px-3 py-1 rounded-md text-xs ${PRIORITY_STYLES[priority]}`}>{priority}</span>
         <MoreHorizIcon className="text-[#787486] cursor-pointer" />
       </div>
       <Typography variant="h6" className="font-bold text-base mb-1 text-black leading-tight">{title}</Typography>

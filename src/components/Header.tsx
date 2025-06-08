@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import { CalendarIcon, MessageQuestionIcon, NotificationIcon } from '../utils/icons';
 
 export const Header: React.FC = () => (
-  <header className="w-full flex items-center justify-between px-8 py-4 bg-white border-b border-[#E4E4E4] h-[64px] shadow-sm z-10">
+  <header className="w-full flex items-center justify-between px-8 py-4 bg-white border-b border-[#E4E4E4] h-[64px] z-10">
     {/* Search bar */}
     <div className="flex-1 max-w-xs">
       <div className="relative w-full">

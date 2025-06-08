@@ -3,24 +3,23 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import AddIcon from '@mui/icons-material/Add';
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import { SIDEBAR_PROJECTS } from '../constants';
-import { LayoutIcon, MemberIcon, MessageIcon, SettingIcon, TaskIcon, TriangleCirclesLogo } from '../utils/icons';
+import { AddIcon, LayoutIcon, MemberIcon, MessageIcon, SettingIcon, TaskIcon, TriangleCirclesLogo } from '../utils/icons';
 
 
 
 export const Sidebar: React.FC = () => (
-  <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-[#E4E4E4] rounded-tr-3xl rounded-br-3xl shadow-md flex flex-col justify-between z-30">
-    <div className="flex flex-col h-full px-6 pt-8 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
-      <div className="flex items-center gap-2 mb-10">
+  <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-[#E4E4E4] rounded-br-3xl flex flex-col justify-between z-30">
+    <div className="flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
+      <div className="flex items-center border-b gap-2 mb-10 p-4">
         <TriangleCirclesLogo />
         <span className="font-bold text-xl tracking-tight">Project M.</span>
         <KeyboardDoubleArrowLeftIcon className="ml-auto text-gray-400" fontSize="small" />
       </div>
       {/* Menu */}
-      <nav className="flex flex-col gap-1 mb-6">
+      <nav className="flex flex-col gap-1 mb-2 p-3">
         <SidebarNavItem icon={<LayoutIcon/>} label="Home" />
         <SidebarNavItem icon={<MessageIcon/>} label="Messages" />
         <SidebarNavItem icon={<TaskIcon/>} label="Tasks" />
@@ -28,10 +27,10 @@ export const Sidebar: React.FC = () => (
         <SidebarNavItem icon={<SettingIcon/>} label="Settings" />
       </nav>
       {/* Projects */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between text-[10px] text-gray-400 mb-2 font-semibold tracking-widest uppercase">
+      <div className="mb-8 p-3 ">
+        <div className="flex border-t pt-6 items-center justify-between text-[10px] text-gray-400 mb-2 font-semibold tracking-widest uppercase">
           <span>MY PROJECTS</span>
-          <AddIcon fontSize="small" className="text-[#787486] cursor-pointer border-2 border-[#787486] rounded-md" style={{ fontSize: 16, marginBottom: 1 }} />
+          <AddIcon size={16}/>
         </div>
         <ul className="flex flex-col gap-1">
           {SIDEBAR_PROJECTS.map((project) => (
@@ -51,7 +50,7 @@ export const Sidebar: React.FC = () => (
         </ul>
       </div>
       {/* Thoughts Time */}
-      <div className="relative flex flex-col items-center mt-2 mb-4">
+      <div className="relative flex flex-col items-center mt-2 mb-4 p-3">
         <div className="absolute left-1/2 -translate-x-1/2 top-0 z-10 flex flex-col items-center">
           <span className="w-10 h-10 rounded-full bg-yellow-300 opacity-30 blur-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           <span className="relative z-10 bg-[#F5F6FA] rounded-full p-2 flex items-center justify-center shadow">

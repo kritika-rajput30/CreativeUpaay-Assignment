@@ -25,9 +25,9 @@ export const SIDEBAR_PROJECTS = [
 ];
 
 export const PRIORITY_STYLES = {
-  Low: 'bg-[#F7F0FA] text-[#D58D49] border border-[#D58D49] font-semibold',
-  High: 'bg-[#FFD3D3] text-[#D8727D] border border-[#D8727D] font-semibold',
-  Completed: 'bg-[#83C29D] text-white border border-[#68B266] font-semibold',
+  Low: 'bg-[#F7F0FA] text-[#D58D49]  font-semibold',
+  High: 'bg-[#FFD3D3] text-[#D8727D]  font-semibold',
+  Completed: 'text-green-500 bg-green-100 text-white  font-semibold',
 };
 
 export const STATUS = {
