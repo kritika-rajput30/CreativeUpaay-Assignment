@@ -4,7 +4,6 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { useSelector } from 'react-redux';
 import type { RootState } from './app/store';
-import './App.css'
 import './index.css';
 
 function App() {
