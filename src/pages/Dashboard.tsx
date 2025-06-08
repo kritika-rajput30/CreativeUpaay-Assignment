@@ -6,6 +6,8 @@ import { addActivity } from '../features/activityLog/activityLogSlice';
 import type { Task, TaskPriority } from '../features/tasks/types';
 import { TaskForm } from '../components/TaskForm';
 import { v4 as uuidv4 } from 'uuid';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import type { DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
 import LinkIcon from '@mui/icons-material/Link';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
@@ -45,7 +47,14 @@ export const Dashboard: React.FC = () => {
   const handleTaskSubmit = (task: { title: string; description: string; priority: TaskPriority }) => {
     if (openSection) {
       const sectionId = openSection as keyof typeof STATUS;
-      const newTask = { ...task, id: uuidv4() };
+      const newTask: Task = {
+        ...task,
+        id: uuidv4(),
+        dueDate: new Date().toISOString(),
+        subtasks: [],
+        tags: [],
+        labels: []
+      };
       dispatch(addTask({
         section: sectionId,
         task: newTask,
@@ -55,7 +64,7 @@ export const Dashboard: React.FC = () => {
     }
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) return;
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
@@ -79,7 +88,7 @@ export const Dashboard: React.FC = () => {
       {/* Title Row */}
       <div className="flex items-center justify-between mt-2 mb-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-3xl font-extrabold text-black tracking-tight">Mobile App</h1>
+          <h1 className="text-4xl font-semibold tracking-tight">Mobile App</h1>
           <span className="flex gap-3 mt-3 ml-3">
             <span className="bg-[#EEF2FF] rounded-lg w-6 h-6 flex items-center justify-center">
               <LinkIcon className="text-[#635DFF] w-4 h-4" fontSize="inherit" />
@@ -130,25 +139,57 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
       
-      <div className="flex gap-6 w-full">
-        {SECTION_DATA.map((section) => {
-          const sectionId = section.key as keyof typeof STATUS;
-          return (
-            <div key={section.key} className={`flex-1 min-w-[320px] max-w-[400px] bg-[#F5F6FA] rounded-2xl p-4 ${SECTION_COLORS[sectionId]} flex flex-col`}>
-              <div className="flex items-center gap-2 mb-4">
-                <span className={`w-2.5 h-2.5 rounded-full ${section.dot}`}></span>
-                <span className="font-semibold text-sm text-black">{section.title}</span>
-                <span className="bg-[#E0E0E0] text-xs font-semibold rounded px-2 py-0.5">{section.cards.length}</span>
-                <span className="ml-auto text-[#787486] cursor-pointer">+</span>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="flex gap-6 w-full">
+          {SECTION_DATA.map((section) => {
+            const sectionId = section.key as keyof typeof STATUS;
+            const tasks = tasksBySection[sectionId] || [];
+            
+            return (
+              <div key={section.key} className={`flex-1 min-w-[320px] max-w-[400px] bg-[#F5F6FA] rounded-2xl p-4 ${SECTION_COLORS[sectionId]} flex flex-col`}>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className={`w-2.5 h-2.5 rounded-full ${section.dot}`}></span>
+                  <span className="font-semibold text-sm text-black">{section.title}</span>
+                  <span className="bg-[#E0E0E0] text-xs font-semibold rounded px-2 py-0.5">{tasks.length}</span>
+                  <button 
+                    onClick={() => handleAddTask(section.key)}
+                    className="ml-auto text-[#787486] cursor-pointer hover:text-[#635DFF]"
+                  >
+                    +
+                  </button>
+                </div>
+                <div className={`h-1 w-full rounded-full mb-4 ${SECTION_COLORS[sectionId]}`}></div>
+                
+                <Droppable droppableId={section.key}>
+                  {(provided: DroppableProvided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className="flex-1 min-h-[200px]"
+                    >
+                      {tasks.map((task, index) => (
+                        <Draggable key={task.id} draggableId={task.id} index={index}>
+                          {(provided: DraggableProvided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TaskCard {...task} priority={task.priority} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
               </div>
-              <div className={`h-1 w-full rounded-full mb-4 ${SECTION_COLORS[sectionId]}`}></div>
-              {section.cards.map((card, idx) => (
-                <TaskCard key={idx} {...card} priority={card.priority as 'Low' | 'High' | 'Completed'} />
-              ))}
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </DragDropContext>
+
       <TaskForm
         open={!!openSection}
         onClose={() => setOpenSection(null)}

@@ -2,13 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Task, TaskPriority, TaskState } from './types';
 
-const initialState: TaskState = {
-  tasksBySection: {
-    todo: [],
-    inprogress: [],
-    done: [],
-  },
+// Load initial state from localStorage or use default
+const loadInitialState = (): TaskState => {
+  const savedState = localStorage.getItem('tasks');
+  if (savedState) {
+    return JSON.parse(savedState);
+  }
+  return {
+    tasksBySection: {
+      todo: [],
+      inprogress: [],
+      done: [],
+    },
+  };
 };
+
+const initialState: TaskState = loadInitialState();
 
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -16,15 +25,17 @@ const tasksSlice = createSlice({
   reducers: {
     addTask: (
       state,
-      action: PayloadAction<{ section: string; task: Task }>
+      action: PayloadAction<{ section: keyof TaskState['tasksBySection']; task: Task }>
     ) => {
       state.tasksBySection[action.payload.section].push(action.payload.task);
+      // Save to localStorage
+      localStorage.setItem('tasks', JSON.stringify(state));
     },
     moveTask: (
       state,
       action: PayloadAction<{
-        sourceSection: string;
-        destSection: string;
+        sourceSection: keyof TaskState['tasksBySection'];
+        destSection: keyof TaskState['tasksBySection'];
         sourceIndex: number;
         destIndex: number;
       }>
@@ -38,9 +49,13 @@ const tasksSlice = createSlice({
         0,
         moved
       );
+      // Save to localStorage
+      localStorage.setItem('tasks', JSON.stringify(state));
     },
     setTasks: (state, action: PayloadAction<TaskState['tasksBySection']>) => {
       state.tasksBySection = action.payload;
+      // Save to localStorage
+      localStorage.setItem('tasks', JSON.stringify(state));
     },
   },
 });
