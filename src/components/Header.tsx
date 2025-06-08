@@ -5,6 +5,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Avatar from '@mui/material/Avatar';
+import { CalendarIcon, MessageQuestionIcon, NotificationIcon } from '../utils/icons';
 
 export const Header: React.FC = () => (
   <header className="w-full flex items-center justify-between px-8 py-4 bg-white border-b border-[#E4E4E4] h-[64px] shadow-sm z-10">
@@ -24,14 +25,14 @@ export const Header: React.FC = () => (
     <div className="flex items-center gap-4 ml-8">
       <div className="flex items-center gap-2">
         <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
-          <CalendarTodayOutlinedIcon className="text-gray-500" style={{ fontSize: '1.1rem' }} />
+        <CalendarIcon/>
         </button>
         <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
-          <HelpOutlineIcon className="text-gray-500" style={{ fontSize: '1.1rem' }} />
+        <MessageQuestionIcon/> 
         </button>
         <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
-          <NotificationsNoneOutlinedIcon className="text-gray-500" style={{ fontSize: '1.1rem' }} />
-        </button>
+          <NotificationIcon/>
+       </button>
       </div>
       <div className="flex items-center gap-2 ml-4 cursor-pointer">
         <div className="flex flex-col items-end leading-tight mr-2">

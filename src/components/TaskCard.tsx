@@ -12,6 +12,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { PRIORITY_STYLES } from '../constants';
+import { FolderIcon, MessageIcon } from '../utils/icons';
 
 export interface Subtask {
   id: string;
@@ -32,13 +33,14 @@ export interface TaskCardProps {
   files?: number;
   onClick?: () => void;
   children?: React.ReactNode;
+  isDragging?: boolean;
 }
 
-export const TaskCard: React.FC<TaskCardProps> = ({ title, description, priority, dueDate, subtasks, tags, labels, avatars = [], comments = 12, files = 3, onClick, children }) => {
+export const TaskCard: React.FC<TaskCardProps> = ({ title, description, priority, dueDate, subtasks, tags, labels, avatars = [], comments = 12, files = 3, onClick, children, isDragging = false }) => {
   const isOverdue = dueDate && new Date(dueDate) < new Date();
 
   return (
-    <div className="bg-white rounded-xl shadow-card p-5 mb-4 cursor-pointer transition hover:shadow-lg relative">
+    <div className={`bg-white rounded-xl shadow-card p-5 mb-4 cursor-pointer relative ${!isDragging ? 'hover:shadow-lg' : ''}`}>
       <div className="flex items-center justify-between mb-2">
         <span className={`px-3 py-1 rounded-full text-xs ${PRIORITY_STYLES[priority]}`}>{priority}</span>
         <MoreHorizIcon className="text-[#787486] cursor-pointer" />
@@ -62,8 +64,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ title, description, priority
           ))}
         </div>
         <div className="flex items-center gap-4 text-xs text-[#787486]">
-          <span className="flex items-center gap-1"><ChatBubbleOutlineOutlinedIcon fontSize="small" className="!text-base" /> {comments} comments</span>
-          <span className="flex items-center gap-1"><InsertDriveFileOutlinedIcon fontSize="small" className="!text-base" /> {files} files</span>
+          <span className="flex items-center gap-1"><MessageIcon size={18}/> {comments} comments</span>
+          <span className="flex items-center gap-1"><FolderIcon size={18}/> {files} files</span>
         </div>
       </div>
       {children}

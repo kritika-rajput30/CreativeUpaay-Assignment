@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -32,15 +33,15 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onFilterChange,
   availableTags,
 }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [anchorElFilter, setAnchorElFilter] = useState<HTMLButtonElement | null>(null); // For "Filter" button popover
+  const [anchorElToday, setAnchorElToday] = useState<HTMLButtonElement | null>(null); // For "Today" button DatePicker popover
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElFilter(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleFilterClose = () => {
+    setAnchorElFilter(null);
   };
 
   const handlePriorityChange = (priority: string) => {
@@ -49,7 +50,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
   const handleDateChange = (date: Date | null) => {
     onFilterChange({ ...filters, dueDate: date });
-    setIsDatePickerOpen(false); // Close date picker after selection
+    // Close the DatePicker popover after date selection
+    setAnchorElToday(null); 
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,60 +65,48 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     onFilterChange({ ...filters, tags: newTags });
   };
 
-  const handleTodayClick = () => {
-    setIsDatePickerOpen(true);
+  const handleTodayClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onFilterChange({ ...filters, dueDate: new Date() }); // Set date to today
+    setAnchorElToday(event.currentTarget); // Open the DatePicker popover
   };
 
-  const openFilterPopover = Boolean(anchorEl);
+  const handleTodayPopoverClose = () => {
+    setAnchorElToday(null);
+  };
+
+  const openFilterPopover = Boolean(anchorElFilter);
   const filterPopoverId = openFilterPopover ? 'filter-popover' : undefined;
+
+  const openTodayPopover = Boolean(anchorElToday);
+  const todayPopoverId = openTodayPopover ? 'today-popover' : undefined;
 
   return (
     <div className="flex items-center gap-3">
-      <Button
+      {/* Filter Button */}
+      <button
         aria-describedby={filterPopoverId}
-        variant="outlined"
-        onClick={handleClick}
-        className="bg-white border border-[#787486] rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2 text-[#787486] normal-case hover:bg-gray-50"
-        startIcon={<FilterIcon size={16} color="#787486" />}
-        endIcon={<KeyboardArrowDownIcon fontSize="small" className="text-[#787486]" />}
-      >
-        Filter
-      </Button>
-<div className='hidden relative'>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          label="Due Date"
-          value={filters.dueDate}
-          onChange={handleDateChange}
-          open={isDatePickerOpen} // Control open state programmatically
-          onClose={() => setIsDatePickerOpen(false)} // Close when date picker is dismissed
-          className=' absolute top-20'
-          slotProps={{
-            textField: {
-              readOnly: true, // Make the text field read-only
-              onClick: () => setIsDatePickerOpen(true), // Open on click
-              size: 'small',
-              className: 'hidden', // Hide the text field for visual purposes
-            },
-          }}
-        />
-      </LocalizationProvider>
-</div>
-      <Button
-        variant="outlined"
-        onClick={handleTodayClick}
-        className="bg-white border rounded-full px-2 py-2 text-xs font-medium flex items-center gap-2 text-[#787486] normal-case hover:bg-gray-50"
-        startIcon={<CalendarIcon size={16} color="#787486" />}
-        endIcon={<KeyboardArrowDownIcon fontSize="small"  />}
-      >
-        Today
-      </Button>
+        onClick={handleFilterClick}
+        className="bg-white border border-gray-400 rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2 normal-case hover:bg-gray-50"
+      ><FilterIcon size={16} color="#787486" />
+        Filter<KeyboardArrowDownIcon fontSize="small" className="text-[#787486]" />
+      </button>
 
+      {/* Today Button */}
+      <button
+        aria-describedby={todayPopoverId}
+        onClick={handleTodayClick}
+        className="bg-white border border-gray-400 rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2 normal-case hover:bg-gray-50"
+       
+      ><CalendarIcon size={16} color="#787486" />
+        Today<KeyboardArrowDownIcon fontSize="small" className="" />
+      </button>
+
+      {/* Filter Popover Content (Priority, Search, Tags) */}
       <Popover
         id={filterPopoverId}
         open={openFilterPopover}
-        anchorEl={anchorEl}
-        onClose={handleClose}
+        anchorEl={anchorElFilter}
+        onClose={handleFilterClose}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
@@ -145,7 +135,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </Select>
           </FormControl>
 
-          
+         
 
           <Box className="flex flex-wrap gap-2">
             {availableTags.map((tag) => (
@@ -160,6 +150,33 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             ))}
           </Box>
         </div>
+      </Popover>
+
+      {/* Dedicated DatePicker Popover for "Today" button */}
+      <Popover
+        id={todayPopoverId}
+        open={openTodayPopover}
+        anchorEl={anchorElToday}
+        onClose={handleTodayPopoverClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        PaperProps={{
+          className: 'shadow-lg rounded-lg bg-white mt-2', // No padding here, StaticDatePicker handles its own.
+        }}
+      >
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <StaticDatePicker
+            orientation="portrait"
+            value={filters.dueDate}
+            onChange={handleDateChange}
+          />
+        </LocalizationProvider>
       </Popover>
     </div>
   );

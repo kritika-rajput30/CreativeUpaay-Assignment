@@ -5,18 +5,11 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import AddIcon from '@mui/icons-material/Add';
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
-import { GridIcon } from '../pages/Dashboard';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import { SIDEBAR_PROJECTS } from '../constants';
-import { LayoutIcon } from '../utils/icons';
+import { LayoutIcon, MemberIcon, MessageIcon, SettingIcon, TaskIcon, TriangleCirclesLogo } from '../utils/icons';
 
-const TriangleCirclesLogo = () => (
-  <svg width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="18" cy="10" r="9" fill="#9E70FF" fillOpacity="0.85" />
-    <circle cx="9" cy="24" r="9" fill="#D6C6FF" fillOpacity="0.85" />
-    <circle cx="27" cy="24" r="9" fill="#5B28FF" fillOpacity="0.85" />
-  </svg>
-);
+
 
 export const Sidebar: React.FC = () => (
   <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-[#E4E4E4] rounded-tr-3xl rounded-br-3xl shadow-md flex flex-col justify-between z-30">
@@ -29,10 +22,10 @@ export const Sidebar: React.FC = () => (
       {/* Menu */}
       <nav className="flex flex-col gap-1 mb-6">
         <SidebarNavItem icon={<LayoutIcon/>} label="Home" />
-        <SidebarNavItem icon={<ChatBubbleOutlineOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Messages" />
-        <SidebarNavItem icon={<FactCheckOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Tasks" />
-        <SidebarNavItem icon={<GroupOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Members" />
-        <SidebarNavItem icon={<SettingsOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Settings" />
+        <SidebarNavItem icon={<MessageIcon/>} label="Messages" />
+        <SidebarNavItem icon={<TaskIcon/>} label="Tasks" />
+        <SidebarNavItem icon={<MemberIcon/>} label="Members" />
+        <SidebarNavItem icon={<SettingIcon/>} label="Settings" />
       </nav>
       {/* Projects */}
       <div className="mb-8">

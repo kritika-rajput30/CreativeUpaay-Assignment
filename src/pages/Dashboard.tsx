@@ -9,7 +9,6 @@ import { FilterBar, type FilterOptions } from '../components/FilterBar';
 import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import type { DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
-import LinkIcon from '@mui/icons-material/Link';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
@@ -18,22 +17,9 @@ import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS, PRIORITY_STYLES } from '../constants';
+import { GridIcon, LinkIcon, ListIcon, PenIcon } from '../utils/icons';
 
-const ListIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} width="20" height="20" fill="none" viewBox="0 0 20 20">
-    <rect x="3" y="5" width="14" height="3" rx="1" fill="currentColor"/>
-    <rect x="3" y="12" width="14" height="3" rx="1" fill="currentColor"/>
-  </svg>
-);
 
-export const GridIcon = ({ className = " rounded-full" }: { className?: string }) => (
-  <svg className={className} width="21" height="21" fill="none" viewBox="0 0 21 21">
-    <rect x="3" y="3" width="5" height="5" rx="1" fill="currentColor"/>
-    <rect x="13" y="3" width="5" height="5" rx="1" fill="currentColor"/>
-    <rect x="3" y="13" width="5" height="5" rx="1" fill="currentColor"/>
-    <rect x="13" y="13" width="5" height="5" rx="1" fill="currentColor"/>
-  </svg>
-);
 
 export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
@@ -131,6 +117,7 @@ export const Dashboard: React.FC = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
+    console.log('Drag result:', result);
     const { source, destination } = result;
     if (!destination) return;
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
@@ -156,12 +143,11 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center gap-2">
           <h1 className="text-4xl font-semibold tracking-tight">Mobile App</h1>
           <span className="flex gap-3 mt-3 ml-3">
-            <span className="bg-[#EEF2FF] rounded-lg w-6 h-6 flex items-center justify-center">
-              <LinkIcon className="text-[#635DFF] w-4 h-4" fontSize="inherit" />
+            <span className="bg-violet-300 rounded-lg w-6 h-6 flex items-center justify-center">
+            <LinkIcon size={18} color='blue'/>
             </span>
-            <span className="bg-[#EEF2FF] rounded-lg w-6 h-6 flex items-center justify-center">
-              <EditOutlinedIcon className="text-[#635DFF] w-4 h-4" fontSize="inherit" />
-            </span>
+            <span className="bg-violet-300 rounded-lg w-6 h-6 flex items-center justify-center">
+<PenIcon size={18} color='blue'/>            </span>
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -189,11 +175,11 @@ export const Dashboard: React.FC = () => {
           <button className="bg-white border border-[#787486] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
           <span className="w-px h-6 bg-black mx-2" />
           <button className="bg-primary rounded-lg p-2 w-8 h-8 flex items-center justify-center">
-          <ListIcon className="text-white"   />
+          <ListIcon />
           </button>
           <button className="bg-white rounded-lg p-2 w-8 h-8 flex items-center justify-center">
         
-            <GridIcon className="text-[#787486]"/>
+            <GridIcon/>
           </button>
         </div>
       </div>
@@ -220,22 +206,34 @@ export const Dashboard: React.FC = () => {
                 </div>
                 <div className={`h-1 w-full rounded-full mb-4 ${SECTION_COLORS[sectionId]}`}></div>
                 
-                <Droppable droppableId={section.key}>
-                  {(provided: DroppableProvided) => (
+                <Droppable droppableId={section.key} type="TASK">
+                  {(provided: DroppableProvided, snapshot) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className="flex-1 min-h-[200px]"
+                      className={`flex-1 min-h-[200px] ${snapshot.isDraggingOver ? 'border-2 border-dashed border-purple-400 rounded-xl' : ''}`}
                     >
                       {tasks.map((task, index) => (
-                        <Draggable key={task.id} draggableId={task.id} index={index}>
-                          {(provided: DraggableProvided) => (
+                        <Draggable key={task.id} draggableId={task.id} index={index} {...({ type: "TASK" } as any)}>
+                          {(provided: DraggableProvided, snapshot) => (
                             <div
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                                zIndex: snapshot.isDragging ? 9999 : 'auto',
+                                willChange: 'transform',
+                              }}
                             >
-                              <TaskCard {...task} priority={task.priority} />
+                              <div
+                                style={{
+                                  transform: snapshot.isDragging ? 'rotate(2deg)' : 'none',
+                                  transition: 'transform 0.2s ease-in-out',
+                                }}
+                              >
+                                <TaskCard {...task} priority={task.priority} isDragging={snapshot.isDragging} />
+                              </div>
                             </div>
                           )}
                         </Draggable>
