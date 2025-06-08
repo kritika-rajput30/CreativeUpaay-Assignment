@@ -4,148 +4,17 @@ import type { RootState } from '../app/store';
 import { addTask, moveTask } from '../features/tasks/tasksSlice';
 import { addActivity } from '../features/activityLog/activityLogSlice';
 import type { Task, TaskPriority } from '../features/tasks/types';
-import { DragDropContext, Draggable } from 'react-beautiful-dnd';
-import { SectionColumn } from '../components/SectionColumn';
 import { TaskForm } from '../components/TaskForm';
-import { FilterBar } from '../components/FilterBar';
 import { v4 as uuidv4 } from 'uuid';
 import LinkIcon from '@mui/icons-material/Link';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
-import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined';
-import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Avatar from '@mui/material/Avatar';
 import { TaskCard } from '../components/TaskCard';
 import AddIcon from '@mui/icons-material/Add';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-
-const sectionTitles: Record<string, string> = {
-  todo: 'To Do',
-  inprogress: 'On Progress',
-  done: 'Done',
-};
-
-const sectionColors: Record<string, string> = {
-  todo: 'border-b-4 border-[#5030E5]',
-  inprogress: 'border-b-4 border-[#FFA500]',
-  done: 'border-b-4 border-[#8BC48A]',
-};
-
-const avatars = [
-  'https://randomuser.me/api/portraits/men/32.jpg',
-  'https://randomuser.me/api/portraits/women/44.jpg',
-  'https://randomuser.me/api/portraits/men/45.jpg',
-  'https://randomuser.me/api/portraits/women/46.jpg',
-];
-
-const sectionData = [
-  {
-    key: 'todo',
-    title: 'To Do',
-    color: 'border-b-4 border-[#5030E5]',
-    dot: 'bg-[#5030E5]',
-    cards: [
-      {
-        priority: 'Low',
-        title: 'Brainstorming',
-        description: `Brainstorming brings team members' diverse experience into play.`,
-        avatars: [
-          'https://randomuser.me/api/portraits/men/32.jpg',
-          'https://randomuser.me/api/portraits/women/44.jpg',
-          'https://randomuser.me/api/portraits/men/45.jpg',
-        ],
-        comments: 12,
-        files: 0,
-      },
-      {
-        priority: 'High',
-        title: 'Research',
-        description: 'User research helps you to create an optimal product for users.',
-        avatars: [
-          'https://randomuser.me/api/portraits/women/46.jpg',
-          'https://randomuser.me/api/portraits/men/32.jpg',
-        ],
-        comments: 10,
-        files: 3,
-      },
-      {
-        priority: 'High',
-        title: 'Wireframes',
-        description: 'Low fidelity wireframes include the most basic content and visuals.',
-        avatars: [
-          'https://randomuser.me/api/portraits/men/45.jpg',
-        ],
-        comments: 8,
-        files: 1,
-      },
-    ],
-  },
-  {
-    key: 'inprogress',
-    title: 'On Progress',
-    color: 'border-b-4 border-[#FFA500]',
-    dot: 'bg-[#FFA500]',
-    cards: [
-      {
-        priority: 'Low',
-        title: 'Brainstorming',
-        description: `Brainstorming brings team members' diverse experience into play.`,
-        avatars: [
-          'https://randomuser.me/api/portraits/men/32.jpg',
-          'https://randomuser.me/api/portraits/women/44.jpg',
-        ],
-        comments: 12,
-        files: 0,
-      },
-      {
-        priority: 'Low',
-        title: 'Brainstorming',
-        description: `Brainstorming brings team members' diverse experience into play.`,
-        avatars: [
-          'https://randomuser.me/api/portraits/men/32.jpg',
-        ],
-        comments: 12,
-        files: 0,
-      },
-    ],
-  },
-  {
-    key: 'done',
-    title: 'Done',
-    color: 'border-b-4 border-[#8BC48A]',
-    dot: 'bg-[#8BC48A]',
-    cards: [
-      {
-        priority: 'Low',
-        title: 'Brainstorming',
-        description: `Brainstorming brings team members' diverse experience into play.`,
-        avatars: [
-          'https://randomuser.me/api/portraits/men/32.jpg',
-          'https://randomuser.me/api/portraits/women/44.jpg',
-        ],
-        comments: 12,
-        files: 0,
-      },
-      {
-        priority: 'Completed',
-        title: 'Design System',
-        description: 'It just needs to adapt the UI from what you did before',
-        avatars: [
-          'https://randomuser.me/api/portraits/men/45.jpg',
-        ],
-        comments: 12,
-        files: 0,
-      },
-    ],
-  },
-];
+import { SECTION_TITLES, SECTION_COLORS, AVATARS, SECTION_DATA, STATUS, PRIORITY_STYLES } from '../constants';
 
 const ListIcon = ({ className = "" }: { className?: string }) => (
   <svg className={className} width="20" height="20" fill="none" viewBox="0 0 20 20">
@@ -175,12 +44,13 @@ export const Dashboard: React.FC = () => {
 
   const handleTaskSubmit = (task: { title: string; description: string; priority: TaskPriority }) => {
     if (openSection) {
+      const sectionId = openSection as keyof typeof STATUS;
       const newTask = { ...task, id: uuidv4() };
       dispatch(addTask({
-        section: openSection,
+        section: sectionId,
         task: newTask,
       }));
-      dispatch(addActivity(`Added task "${task.title}" to ${sectionTitles[openSection]}`));
+      dispatch(addActivity(`Added task "${task.title}" to ${SECTION_TITLES[sectionId]}`));
       setOpenSection(null);
     }
   };
@@ -189,15 +59,19 @@ export const Dashboard: React.FC = () => {
     const { source, destination } = result;
     if (!destination) return;
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    
+    const sourceId = source.droppableId as keyof typeof STATUS;
+    const destId = destination.droppableId as keyof typeof STATUS;
+    
     dispatch(
       moveTask({
-        sourceSection: source.droppableId,
-        destSection: destination.droppableId,
+        sourceSection: sourceId,
+        destSection: destId,
         sourceIndex: source.index,
         destIndex: destination.index,
       })
     );
-    dispatch(addActivity(`Moved task from ${sectionTitles[source.droppableId]} to ${sectionTitles[destination.droppableId]}`));
+    dispatch(addActivity(`Moved task from ${SECTION_TITLES[sourceId]} to ${SECTION_TITLES[destId]}`));
   };
 
   return (
@@ -255,22 +129,25 @@ export const Dashboard: React.FC = () => {
           </button>
         </div>
       </div>
-      {/* Kanban Board */}
+      
       <div className="flex gap-6 w-full">
-        {sectionData.map((section) => (
-          <div key={section.key} className={`flex-1 min-w-[320px] max-w-[400px] bg-[#F5F6FA] rounded-2xl p-4 ${section.color} flex flex-col`}>
-            <div className="flex items-center gap-2 mb-4">
-              <span className={`w-2.5 h-2.5 rounded-full ${section.dot}`}></span>
-              <span className="font-semibold text-sm text-black">{section.title}</span>
-              <span className="bg-[#E0E0E0] text-xs font-semibold rounded px-2 py-0.5">{section.cards.length}</span>
-              <span className="ml-auto text-[#787486] cursor-pointer">+</span>
+        {SECTION_DATA.map((section) => {
+          const sectionId = section.key as keyof typeof STATUS;
+          return (
+            <div key={section.key} className={`flex-1 min-w-[320px] max-w-[400px] bg-[#F5F6FA] rounded-2xl p-4 ${SECTION_COLORS[sectionId]} flex flex-col`}>
+              <div className="flex items-center gap-2 mb-4">
+                <span className={`w-2.5 h-2.5 rounded-full ${section.dot}`}></span>
+                <span className="font-semibold text-sm text-black">{section.title}</span>
+                <span className="bg-[#E0E0E0] text-xs font-semibold rounded px-2 py-0.5">{section.cards.length}</span>
+                <span className="ml-auto text-[#787486] cursor-pointer">+</span>
+              </div>
+              <div className={`h-1 w-full rounded-full mb-4 ${SECTION_COLORS[sectionId]}`}></div>
+              {section.cards.map((card, idx) => (
+                <TaskCard key={idx} {...card} priority={card.priority as 'Low' | 'High' | 'Completed'} />
+              ))}
             </div>
-            <div className={`h-1 w-full rounded-full mb-4 ${section.color}`}></div>
-            {section.cards.map((card, idx) => (
-              <TaskCard key={idx} {...card} priority={card.priority as 'Low' | 'High' | 'Completed'} />
-            ))}
-          </div>
-        ))}
+          );
+        })}
       </div>
       <TaskForm
         open={!!openSection}

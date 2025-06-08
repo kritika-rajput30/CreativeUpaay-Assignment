@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import { PRIORITY_STYLES } from '../constants';
 
 export interface Subtask {
   id: string;
@@ -22,7 +23,7 @@ export interface TaskCardProps {
   title: string;
   description: string;
   priority: 'Low' | 'High' | 'Completed';
-  dueDate?: string; // ISO string format
+  dueDate?: string; 
   subtasks?: Subtask[];
   tags?: string[];
   labels?: string[];
@@ -33,19 +34,13 @@ export interface TaskCardProps {
   children?: React.ReactNode;
 }
 
-const priorityStyles = {
-  Low: 'bg-[#F7F0FA] text-[#D58D49] border border-[#D58D49] font-semibold',
-  High: 'bg-[#FFD3D3] text-[#D8727D] border border-[#D8727D] font-semibold',
-  Completed: 'bg-[#83C29D] text-white border border-[#68B266] font-semibold',
-};
-
 export const TaskCard: React.FC<TaskCardProps> = ({ title, description, priority, dueDate, subtasks, tags, labels, avatars = [], comments = 12, files = 3, onClick, children }) => {
   const isOverdue = dueDate && new Date(dueDate) < new Date();
 
   return (
     <div className="bg-white rounded-xl shadow-card p-5 mb-4 cursor-pointer transition hover:shadow-lg relative">
       <div className="flex items-center justify-between mb-2">
-        <span className={`px-3 py-1 rounded-full text-xs ${priorityStyles[priority]}`}>{priority}</span>
+        <span className={`px-3 py-1 rounded-full text-xs ${PRIORITY_STYLES[priority]}`}>{priority}</span>
         <MoreHorizIcon className="text-[#787486] cursor-pointer" />
       </div>
       <Typography variant="h6" className="font-bold text-base mb-1 text-black leading-tight">{title}</Typography>

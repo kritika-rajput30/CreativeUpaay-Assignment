@@ -1,29 +1,18 @@
 import React from 'react';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import AddIcon from '@mui/icons-material/Add';
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 import { GridIcon } from '../pages/Dashboard';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
-
-const projects = [
-  { name: 'Mobile App', color: 'bg-green-500', active: true },
-  { name: 'Website Redesign', color: 'bg-yellow-400', active: false },
-  { name: 'Design System', color: 'bg-purple-400', active: false },
-  { name: 'Wireframes', color: 'bg-blue-400', active: false },
-];
+import { SIDEBAR_PROJECTS } from '../constants';
 
 const TriangleCirclesLogo = () => (
   <svg width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Top circle */}
     <circle cx="18" cy="10" r="9" fill="#9E70FF" fillOpacity="0.85" />
-    {/* Bottom left circle */}
     <circle cx="9" cy="24" r="9" fill="#D6C6FF" fillOpacity="0.85" />
-    {/* Bottom right circle */}
     <circle cx="27" cy="24" r="9" fill="#5B28FF" fillOpacity="0.85" />
   </svg>
 );
@@ -31,12 +20,10 @@ const TriangleCirclesLogo = () => (
 export const Sidebar: React.FC = () => (
   <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-[#E4E4E4] rounded-tr-3xl rounded-br-3xl shadow-md flex flex-col justify-between z-30">
     <div className="flex flex-col h-full px-6 pt-8 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
-      {/* Logo + Chevron */}
       <div className="flex items-center gap-2 mb-10">
-        {/* <span className="w-4 h-4 rounded-full bg-gradient-to-br from-[#A3A6F6] to-[#635DFF]" /> */}
         <TriangleCirclesLogo />
         <span className="font-bold text-xl tracking-tight">Project M.</span>
-        <ChevronRightIcon className="ml-auto text-gray-400" fontSize="small" />
+        <KeyboardDoubleArrowLeftIcon className="ml-auto text-gray-400" fontSize="small" />
       </div>
       {/* Menu */}
       <nav className="flex flex-col gap-1 mb-6">
@@ -53,7 +40,7 @@ export const Sidebar: React.FC = () => (
           <AddIcon fontSize="small" className="text-[#787486] cursor-pointer border-2 border-[#787486] rounded-md" style={{ fontSize: 16, marginBottom: 1 }} />
         </div>
         <ul className="flex flex-col gap-1">
-          {projects.map((project) => (
+          {SIDEBAR_PROJECTS.map((project) => (
             <li
               key={project.name}
               className={`flex items-center gap-2 px-2 py-2 rounded-lg cursor-pointer transition-colors ${
