@@ -8,6 +8,7 @@ import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 import { GridIcon } from '../pages/Dashboard';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import { SIDEBAR_PROJECTS } from '../constants';
+import { LayoutIcon } from '../utils/icons';
 
 const TriangleCirclesLogo = () => (
   <svg width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +28,7 @@ export const Sidebar: React.FC = () => (
       </div>
       {/* Menu */}
       <nav className="flex flex-col gap-1 mb-6">
-        <SidebarNavItem icon={<GridIcon className="text-[#787486] w-5 h-5" />} label="Home" />
+        <SidebarNavItem icon={<LayoutIcon/>} label="Home" />
         <SidebarNavItem icon={<ChatBubbleOutlineOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Messages" />
         <SidebarNavItem icon={<FactCheckOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Tasks" />
         <SidebarNavItem icon={<GroupOutlinedIcon fontSize="small" className="text-[#787486]" />} label="Members" />

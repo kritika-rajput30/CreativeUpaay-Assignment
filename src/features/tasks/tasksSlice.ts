@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Task, TaskPriority, TaskState } from './types';
+import type { Task, TaskPriority, TaskState } from '../../utils/types';
 
 // Load initial state from localStorage or use default
 const loadInitialState = (): TaskState => {

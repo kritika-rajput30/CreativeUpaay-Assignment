@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../app/store';
 import { addTask, moveTask } from '../features/tasks/tasksSlice';
 import { addActivity } from '../features/activityLog/activityLogSlice';
-import type { Task, TaskPriority } from '../features/tasks/types';
+import type { Task, TaskPriority } from '../utils/types';
 import { TaskForm } from '../components/TaskForm';
+import { FilterBar, type FilterOptions } from '../components/FilterBar';
 import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import type { DropResult, DroppableProvided, DraggableProvided } from '@hello-pangea/dnd';
@@ -38,7 +39,72 @@ export const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const tasksBySection = useSelector((state: RootState) => state.tasks.tasksBySection);
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [filterPriority, setFilterPriority] = useState('');
+  const [filters, setFilters] = useState<FilterOptions>({
+    priority: '',
+    dueDate: null,
+    searchQuery: '',
+    tags: [],
+  });
+
+  // Get all unique tags from tasks
+  const availableTags = useMemo(() => {
+    const tags = new Set<string>();
+    Object.values(tasksBySection).forEach(tasks => {
+      tasks.forEach(task => {
+        task.tags?.forEach(tag => tags.add(tag));
+      });
+    });
+    return Array.from(tags);
+  }, [tasksBySection]);
+
+  // Filter tasks based on current filters
+  const filteredTasksBySection = useMemo(() => {
+    const filtered: typeof tasksBySection = {
+      todo: [],
+      inprogress: [],
+      done: [],
+    };
+
+    Object.entries(tasksBySection).forEach(([section, tasks]) => {
+      filtered[section as keyof typeof tasksBySection] = tasks.filter(task => {
+        // Priority filter
+        if (filters.priority && task.priority !== filters.priority) {
+          return false;
+        }
+
+        // Due date filter
+        if (filters.dueDate && task.dueDate) {
+          const taskDate = new Date(task.dueDate);
+          const filterDate = new Date(filters.dueDate);
+          if (taskDate.toDateString() !== filterDate.toDateString()) {
+            return false;
+          }
+        }
+
+        // Search query filter
+        if (filters.searchQuery) {
+          const query = filters.searchQuery.toLowerCase();
+          const matchesTitle = task.title.toLowerCase().includes(query);
+          const matchesDescription = task.description.toLowerCase().includes(query);
+          if (!matchesTitle && !matchesDescription) {
+            return false;
+          }
+        }
+
+        // Tags filter
+        if (filters.tags.length > 0) {
+          const hasMatchingTag = task.tags?.some(tag => filters.tags.includes(tag));
+          if (!hasMatchingTag) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+    });
+
+    return filtered;
+  }, [tasksBySection, filters]);
 
   const handleAddTask = (section: string) => {
     setOpenSection(section);
@@ -114,18 +180,11 @@ export const Dashboard: React.FC = () => {
       </div>
       {/* Filter/Share Row */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex gap-3">
-        <button className="bg-white border border-[#787486] rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2">
-              <FilterAltOutlinedIcon fontSize="small" className="text-[#787486]" />
-              Filter
-              <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
-            <button className="bg-white border border-[#787486] rounded-lg px-2 py-2 text-xs font-medium flex items-center gap-2">
-              <DateRangeOutlinedIcon fontSize="small" className="text-[#787486]" />
-              Today
-              <svg width="16" height="16" fill="none"><path d="M4 6l4 4 4-4" stroke="#787486" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>  
-        </div>
+      <FilterBar
+        filters={filters}
+        onFilterChange={setFilters}
+        availableTags={availableTags}
+      />
         <div className="flex items-center gap-3">
           <button className="bg-white border border-[#787486] rounded-lg px-4 py-2 text-xs font-medium flex items-center gap-2"><ShareOutlinedIcon fontSize="small" className="text-[#787486]" /> Share</button>
           <span className="w-px h-6 bg-black mx-2" />
@@ -138,12 +197,13 @@ export const Dashboard: React.FC = () => {
           </button>
         </div>
       </div>
-      
+           
+
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="flex gap-6 w-full">
           {SECTION_DATA.map((section) => {
             const sectionId = section.key as keyof typeof STATUS;
-            const tasks = tasksBySection[sectionId] || [];
+            const tasks = filteredTasksBySection[sectionId] || [];
             
             return (
               <div key={section.key} className={`flex-1 min-w-[320px] max-w-[400px] bg-[#F5F6FA] rounded-2xl p-4 ${SECTION_COLORS[sectionId]} flex flex-col`}>
