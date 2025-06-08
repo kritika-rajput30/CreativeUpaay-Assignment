@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['tasks'], // Don't persist tasks state
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

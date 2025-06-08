@@ -1,6 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Task, TaskPriority, TaskState } from '../../utils/types';
+import { SECTION_DATA } from '../../constants';
+
+// Convert SECTION_DATA cards to tasks
+const convertCardsToTasks = () => {
+  const tasks: TaskState['tasksBySection'] = {
+    todo: [],
+    inprogress: [],
+    done: [],
+  };
+
+  SECTION_DATA.forEach(section => {
+    const sectionId = section.key as keyof TaskState['tasksBySection'];
+    tasks[sectionId] = section.cards.map(card => ({
+      id: Math.random().toString(36).substr(2, 9),
+      title: card.title,
+      description: card.description,
+      priority: card.priority as TaskPriority,
+      dueDate: new Date().toISOString(),
+      subtasks: [],
+      tags: [],
+      labels: [],
+      avatars: card.avatars,
+      comments: card.comments,
+      files: card.files
+    }));
+  });
+
+  return tasks;
+};
 
 // Load initial state from localStorage or use default
 const loadInitialState = (): TaskState => {
@@ -9,11 +38,7 @@ const loadInitialState = (): TaskState => {
     return JSON.parse(savedState);
   }
   return {
-    tasksBySection: {
-      todo: [],
-      inprogress: [],
-      done: [],
-    },
+    tasksBySection: convertCardsToTasks(),
   };
 };
 
